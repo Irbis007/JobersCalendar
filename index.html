@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Stay organized with our user-friendly Calendar featuring events, reminders, and a customizable interface. Built with HTML, CSS, and JavaScript. Start scheduling today!"
+    />
+    <meta
+      name="keywords"
+      content="calendar, events, reminders, javascript, html, css, open source coding"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
+      integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link rel="stylesheet" href="./datapicker.css">
+    <link rel="stylesheet" href="style.css" />
+    <title>Jobrs Calendar</title>
+  </head>
+  <body>
+    <div class="calendar-wrapper">
+      <div class="calendar-top">
+        <div class="title">Календарь</div>
+        <div class="descr">
+          Здесь вы можете увидеть события по кандидатам, а так же по назначенным встречам будете
+          получать напоминания, что бы ничего не пропустить
+        </div>
+        <div class="buttons">
+          <div class="body-buttons">
+            <button class="week-button top-button button active">Неделя</button>
+            <button class="day-button top-button button">День</button>
+            <button class="add-events top-button button">
+              <img src="./img/plus.png" alt="plus">
+              <span>Добавить событие</span>
+            </button>
+          </div>
+          <button class="show-schedule button">
+            <svg width="19" height="20" viewBox="0 0 19 20" fill="none"  xmlns="http://www.w3.org/2000/svg">
+              <g clip-path="url(#clip0_1203_2232)">
+              <path d="M15.4375 3.46875H3.5625C3.23458 3.46875 2.96875 3.73458 2.96875 4.0625V15.9375C2.96875 16.2654 3.23458 16.5312 3.5625 16.5312H15.4375C15.7654 16.5312 16.0312 16.2654 16.0312 15.9375V4.0625C16.0312 3.73458 15.7654 3.46875 15.4375 3.46875Z"  stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M13.0625 2.28125V4.65625" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M5.9375 2.28125V4.65625" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M2.96875 7.03125H16.0312"  stroke-linecap="round" stroke-linejoin="round"/>
+              </g>
+              <defs>
+              <clipPath id="clip0_1203_2232">
+              <rect width="19" height="19" fill="white" transform="translate(0 0.5)"/>
+              </clipPath>
+              </defs>
+            </svg>
+            <span>Показать расписание</span>
+              
+          </button>
+        </div>
+      </div>
+      <div class="calendar-body active">
+        <table class="table-body"></table>
+        <div class="table-body-wrapper"></div>
+      </div>
+      <div class="calendar-day">
+        <div class="top">
+          <div class="prev"><img src="./img/CaretRight.png" alt="" /></div>
+          <div class="day">Сегодня</div>
+          <div class="next"><img src="./img/CaretRight.png" alt="" /></div>
+        </div>
+        <div class="body"></div>
+      </div>
+
+      <div class="schedule">
+        <div class="schedule-item">
+          <div class="schedule-date">Сегодня, 31 Августа, воскресенье</div>
+          <div class="schedule-body">
+            <div class="schedule-time">06:00-07:00</div>
+            <div class="schedule-content">
+              <div class="schedule-title event">Собеседование в скайпе</div>
+              <div class="schedule-from">от Алексей Воронова</div>
+              <div class="schedule-candidate">Кандидат: Алексей Трофимов</div>
+              <div class="schedule-vacancy">Вакансия: Бариста</div>
+            </div>
+          </div>
+          <div class="schedule-body">
+            <div class="schedule-time">10:00-10:30</div>
+            <div class="schedule-content">
+              <div class="schedule-title event">Собеседование в скайпе</div>
+              <div class="schedule-from">от Алексей Воронова</div>
+              <div class="schedule-candidate">Кандидат: Алексей Трофимов</div>
+              <div class="schedule-vacancy">Вакансия: Бариста</div>
+            </div>
+          </div>
+        </div>
+        <div class="schedule-item">
+          <div class="schedule-date">Завтра, 1 Сентября, воскресенье</div>
+          <div class="schedule-body">
+            <div class="schedule-time">10:00-10:30</div>
+            <div class="schedule-content">
+              <div class="schedule-title event">Собеседование в скайпе</div>
+              <div class="schedule-from">от Алексей Воронова</div>
+              <div class="schedule-candidate">Кандидат: Алексей Трофимов</div>
+              <div class="schedule-vacancy">Вакансия: Бариста</div>
+            </div>
+          </div>
+        </div>
+        <div class="schedule-item">
+          <div class="schedule-date">Послезавтра, 2 Сентября, понедельник</div>
+          <div class="schedule-body">
+            <div class="schedule-time">10:00-10:30</div>
+            <div class="schedule-content">
+              <div class="schedule-title event">Собеседование в скайпе</div>
+              <div class="schedule-from">от Алексей Воронова</div>
+              <div class="schedule-candidate">Кандидат: Алексей Трофимов</div>
+              <div class="schedule-vacancy">Вакансия: Бариста</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="popup-schedule edit-schedule calendar-popup">
+        <div class="overview">
+          <div class="popup-content">
+            <div class="popup-close"><img src="./img/close.png" alt="close" /></div>
+            <div class="title">Редактирование события</div>
+            <label for="subject" class="label">
+              <span class="inp-label">Тема</span>
+              <input
+                type="text"
+                id="subject"
+                class="inp inp-subject"
+                placeholder="Начните печатать"
+              />
+            </label>
+            <div class="select-time-wrapper">
+              <label for="edit-date" class="date-label">
+                <span class="label">Дата</span>
+                <div class="sd-container">
+                  <input class="sd selected_date" type="date" id="edit" name="selected_date" readonly/>
+                  <span class="open-button">
+                    <button type="button">
+                      <img class="open" src="./img/calendar-icon.png" alt="open" />
+                      <img class="close" src="./img/close.png" alt="close" />
+                    </button>
+                  </span>
+                  <span class="text">Календарь</span>
+                  <div class="datapicker-wrapper">
+                    <div class="divCal"></div>
+                  </div>
+                </div>
+              </label>
+             <div class="time-select-wrapper">
+              <span class="label">Время</span>
+              <div class="time-wrapper">
+                <div class="select-time left">
+                  <div class="value">00:00</div>
+                  <div class="options"></div>
+                </div>
+
+                <div class="select-time right">
+                  <div class="value">00:00</div>
+                  <div class="options"></div>
+                </div>
+              </div>
+             </div>
+            </div>
+            <div class="options-wrapper vacancy">
+              <div class="select">
+                <div class="top">
+                  <input type="text" class="inp select-inp" placeholder="Вакансия" />
+                  <div class="arrow">
+                    <svg width="14" height="8" viewBox="0 0 14 8" fill="none" xmlns="http://www.w3.org/2000/svg"> <path d="M7.6585 6.92381L12.9971 2.25258C13.692 1.64454 13.2619 0.5 12.3386 0.5H1.66145C0.738085 0.5 0.30804 1.64454 1.00294 2.25258L6.3415 6.92381C6.71852 7.25371 7.28148 7.25371 7.6585 6.92381Z"/>
+                    </svg>
+                    <img class="close" src="./img/close.png" alt="close" />
+                  </div>
+                </div>
+                <div class="options ">
+                  <div class="option">
+                    <label for="edit-vacancy1">
+                      <input type="checkbox" id="edit-vacancy1" class="option-checkbox"/>
+                      <span class="checkbox-text">Бариста ID 2292</span>
+                    </label>
+                  </div>
+                  <div class="option">
+                    <label for="edit-vacancy2">
+                      <input type="checkbox" id="edit-vacancy2" class="option-checkbox"/>
+                      <span class="checkbox-text">Менеджер по продажам ID 2919</span>
+                    </label>
+                  </div>
+                  <div class="option">
+                    <label for="edit-vacancy3">
+                      <input type="checkbox" id="edit-vacancy3" class="option-checkbox"/>
+                      <span class="checkbox-text">Слесарь ID 1202</span>
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="options-wrapper candidate">
+              <div class="select ">
+                <div class="top">
+                  <input type="text" class="inp select-inp" placeholder="Кандидаты" />
+                  <div class="arrow">
+                    <svg width="14" height="8" viewBox="0 0 14 8" fill="none" xmlns="http://www.w3.org/2000/svg"> <path d="M7.6585 6.92381L12.9971 2.25258C13.692 1.64454 13.2619 0.5 12.3386 0.5H1.66145C0.738085 0.5 0.30804 1.64454 1.00294 2.25258L6.3415 6.92381C6.71852 7.25371 7.28148 7.25371 7.6585 6.92381Z"/>
+                    </svg>
+                    <img class="close" src="./img/close.png" alt="close" />
+                  </div>
+                </div>
+                <div class="options">
+                  <div class="option">
+                    <label for="edit-candidate1">
+                      <input type="checkbox" id="edit-candidate1" class="option-checkbox"/>
+                      <span class="checkbox-text">Валиков Антон</span>
+                    </label>
+                  </div>
+                  <div class="option">
+                    <label for="edit-candidate2">
+                      <input type="checkbox" id="edit-candidate2" class="option-checkbox"/>
+                      <span class="checkbox-text">Григорьев Роман</span>
+                    </label>
+                  </div>
+                  <div class="option">
+                    <label for="edit-candidate3">
+                      <input type="checkbox" id="edit-candidate3" class="option-checkbox"/>
+                      <span class="checkbox-text">Парфенко Александр</span>
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <label for="place" class="label date-place">
+              <span class="inp-label">Место</span>
+              <input
+                type="text"
+                id="time"
+                class="inp inp-place"
+                placeholder="Название переговорной или ссылка на Zoom, Skype"
+              />
+            </label>
+            <label for="descr" class="label date-descr">
+              <span class="inp-label">Комментарий или описание</span>
+              <textarea
+                id="descr"
+                placeholder="Можете прикрепить полезные ссылки или написать  как пройти к переговорной"
+                class="inp text-area date-descr"
+              ></textarea>
+            </label>
+            <div class="buttons">
+              <button class="save btn-first">Сохранить</button>
+              <button class="cansel btn-second">отменить</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="popup-schedule new-schedule calendar-popup">
+        <div class="overview">
+          <div class="popup-content">
+            <div class="popup-close"><img src="./img/close.png" alt="close" /></div>
+            <div class="title">Новое событие</div>
+            <label for="subject" class="label">
+              <span class="inp-label">Тема</span>
+              <input
+                type="text"
+                id="subject"
+                class="inp inp-subject"
+                placeholder="Начните печатать"
+              />
+            </label>
+            <div class="select-time-wrapper">
+              <label for="new-date" class="date-label">
+                <span class="label">Дата</span>
+                <div class="sd-container">
+                  <input class="sd selected_date" type="date" id="new-date" name="selected_date" readonly/>
+                  <span class="open-button">
+                    <button type="button">
+                      <img class="open" src="./img/calendar-icon.png" alt="open" />
+                      <img class="close" src="./img/close.png" alt="close" />
+                    </button>
+                  </span>
+                  <span class="text">Календарь</span>
+                  <div class="datapicker-wrapper">
+                    <div class="divCal"></div>
+                  </div>
+                </div>
+              </label>
+              <div class="time-select-wrapper">
+                <span class="label">Время</span>
+                <div class="time-wrapper">
+                  <div class="select-time left">
+                    <div class="value">00:00</div>
+                    <div class="options"></div>
+                  </div>
+  
+                  <div class="select-time right">
+                    <div class="value">00:00</div>
+                    <div class="options"></div>
+                  </div>
+                </div>
+               </div>
+            </div>
+            <div class="options-wrapper vacancy">
+              <div class="select">
+                <div class="top">
+                  <input type="text" class="inp select-inp" placeholder="Вакансия" readonly/>
+                  <div class="arrow">
+                    <svg width="14" height="8" viewBox="0 0 14 8" fill="none" xmlns="http://www.w3.org/2000/svg"> <path d="M7.6585 6.92381L12.9971 2.25258C13.692 1.64454 13.2619 0.5 12.3386 0.5H1.66145C0.738085 0.5 0.30804 1.64454 1.00294 2.25258L6.3415 6.92381C6.71852 7.25371 7.28148 7.25371 7.6585 6.92381Z"/>
+                    </svg>
+                    <img class="close" src="./img/close.png" alt="close" />
+                  </div>
+                </div>
+                <div class="options ">
+                  <div class="option">
+                    <label for="vacancy1">
+                      <input type="checkbox" id="vacancy1" class="option-checkbox"/>
+                      <span class="checkbox-text">Бариста ID 2292</span>
+                    </label>
+                  </div>
+                  <div class="option">
+                    <label for="vacancy2">
+                      <input type="checkbox" id="vacancy2" class="option-checkbox"/>
+                      <span class="checkbox-text">Менеджер по продажам ID 2919</span>
+                    </label>
+                  </div>
+                  <div class="option">
+                    <label for="vacancy3">
+                      <input type="checkbox" id="vacancy3" class="option-checkbox"/>
+                      <span class="checkbox-text">Слесарь ID 1202</span>
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="options-wrapper candidate">
+              <div class="select">
+                <div class="top">
+                  <input type="text" class="inp select-inp" placeholder="Кандидаты" readonly/>
+                  <div class="arrow">
+                    <svg width="14" height="8" viewBox="0 0 14 8" fill="none" xmlns="http://www.w3.org/2000/svg"> <path d="M7.6585 6.92381L12.9971 2.25258C13.692 1.64454 13.2619 0.5 12.3386 0.5H1.66145C0.738085 0.5 0.30804 1.64454 1.00294 2.25258L6.3415 6.92381C6.71852 7.25371 7.28148 7.25371 7.6585 6.92381Z"/>
+                    </svg>
+                    <img class="close" src="./img/close.png" alt="close" />
+                  </div>
+                </div>
+                <div class="options ">
+                  <div class="option">
+                    <label for="candidate1">
+                      <input type="checkbox" id="candidate1" class="option-checkbox"/>
+                      <span class="checkbox-text">Валиков Антон</span>
+                    </label>
+                  </div>
+                  <div class="option">
+                    <label for="candidate2">
+                      <input type="checkbox" id="candidate2" class="option-checkbox"/>
+                      <span  class="checkbox-text">Григорьев Роман</span>
+                    </label>
+                  </div>
+                  <div class="option">
+                    <label for="candidate3">
+                      <input type="checkbox" id="candidate3" class="option-checkbox"/>
+                      <span class="checkbox-text">Парфенко Александр</span>
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <label for="place" class="label date-place">
+              <span class="inp-label">Место</span>
+              <input
+                type="text"
+                id="time"
+                class="inp inp-place"
+                placeholder="Название переговорной или ссылка на Zoom, Skype"
+              />
+            </label>
+            <label for="descr" class="label date-descr">
+              <span class="inp-label">Комментарий или описание</span>
+              <textarea
+                id="descr"
+                placeholder="Можете прикрепить полезные ссылки или написать  как пройти к переговорной"
+                class="inp text-area date-descr"
+              ></textarea>
+            </label>
+            <div class="buttons">
+              <button class="save btn-first">Сохранить</button>
+              <button class="cansel btn-second">отменить</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="popup event-popup calendar-popup">
+        <div class="overview">
+          <div class="popup-content">
+            <div class="popup-close"><img src="./img/close.png" alt="close" /></div>
+            <div class="event-row first">
+              <div class="title">Собеседование в скайпе</div>
+              <div class="date">31 августа, понедельник с 06:00 до 07:00</div>
+            </div>
+            <div class="event-row">
+              <div class="event-text">Кандидаты</div>
+              <span class="event-link">Валиков Антон</span>
+            </div>
+            <div class="event-row">
+              <div class="event-text">Вакансия</div>
+              <span class="event-link">Бариста ID 2292</span>
+            </div>
+            <div class="event-row">
+              <div class="event-text">Место встречи</div>
+              <span class="event-link">ссылка на скайп</span>
+            </div>
+            <div class="event-row">
+              <div class="event-text">Заметки ко встрече</div>
+              <span class="event-link">добавить</span>
+            </div>
+            <div class="events-buttons">
+              <button class="event-edit btn-first">Редактировать</button>
+              <button class="event-delete btn-second">Удалить</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="delete-event calendar-popup">
+        <div class="overview">
+          <div class="popup-content">
+            <div class="popup-close"><img src="./img/close.png" alt="close" /></div>
+            <div class="title">Удаление события “Собеседование в скайпе”</div>
+            <div class="descr">
+              Запись удалится из событий в карточке кандидата и из списка событий в разделе
+              «Календарь».
+            </div>
+            <div class="link">Вы уверены, что хотите удалить событие?</div>
+            <div class="buttons">
+              <button class="delete btn-first">Удалить</button>
+              <button class="cansel btn-second">Отменить</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="delete-candidate"></div>
+
+      <div class="write-message"></div>
+    </div>
+    <script src="./js/script.js"></script>
+  </body>
+</html>

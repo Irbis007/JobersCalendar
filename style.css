@@ -1,0 +1,1010 @@
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700&display=swap");
+@import url("./font.css");
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+  max-width: 100%;
+}
+input:focus {
+  outline: 2px solid #5898ff;
+}
+
+.btn-first {
+  padding: 9px 25px;
+  background-color: #5898ff;
+  border: none;
+  border-radius: 5px;
+  color: #fff;
+}
+
+.btn-second {
+  padding: 9px 25px;
+  background-color: #eff5ff;
+  border: none;
+  border-radius: 5px;
+  color: #333;
+}
+
+.top-button {
+  border-radius: 3px;
+}
+
+.show-schedule {
+  max-height: 100%;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.popup-content {
+  position: relative;
+  top: 100px;
+  left: 50%;
+
+  max-width: 410px;
+  width: 100%;
+  padding: 25px;
+  background-color: #fff;
+  border-radius: 5px;
+
+  transform: translateX(-50%);
+  z-index: 100;
+}
+
+.calendar-wrapper {
+  max-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+
+  background-color: #eaeaea;
+  padding: 15px 15px 0 15px;
+}
+
+.calendar-popup {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  display: none;
+  z-index: 100;
+}
+.calendar-popup.active {
+  display: block;
+}
+
+.calendar-top {
+  margin-top: 20px;
+  padding: 25px;
+  background-color: #fff;
+}
+.title {
+  font-family: "Open-sans", sans-serif;
+  font-size: 20px;
+  font-weight: 600;
+  color: #333;
+}
+.descr {
+  max-width: 610px;
+  margin-top: 10px;
+  font-family: "Open-sans", sans-serif;
+  color: #333;
+}
+.buttons {
+  display: flex;
+  margin-top: 40px;
+}
+.body-buttons {
+  display: flex;
+  flex: 1 0 auto;
+  gap: 15px;
+}
+.button {
+  padding: 9px 25px;
+  background-color: #eff5ff;
+  border: none;
+  color: #5898ff;
+  cursor: pointer;
+}
+.button.active {
+  background-color: #5898ff;
+  color: #fff;
+}
+.top-button {
+  border-radius: 3px;
+}
+.show-schedule {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border-radius: 3px;
+}
+.add-events {
+  margin-left: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+table,
+td {
+  border: 1px dashed #333333;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+
+
+.calendar-body {
+  position: relative;
+  display: none;
+  /* max-height: 775px; */
+  background-color: #fff;
+  overflow: hidden scroll;
+}
+
+.calendar-body tbody {
+  position: relative;
+  background-color: #f9f9f9;
+  top: -28px;
+  z-index: 1;
+}
+.calendar-body thead {
+  position: relative;
+  height: 50px;
+  background-color: #fff;
+  z-index: 50;
+  left: 1px;
+  box-shadow: 1px 1px 3px #00000052;
+}
+
+z
+
+
+.cell-head .head-date{
+  font-size: 13px;
+  color: #333;
+  text-transform: uppercase;
+}
+
+table {
+  border: none;
+}
+
+table .arrow {
+  position: absolute;
+  z-index: 100;
+  top: 10px;
+}
+
+
+
+table .arrow.prev {
+  top: 8px;
+  left: 7%;
+  transform: rotate(-180deg);
+}
+table .arrow.next {
+  right: 10px;
+}
+
+.calendar-body.active {
+  display: block;
+}
+
+.table-body-wrapper {
+  height: 100%;
+  padding: 0 25px 30px 25px;
+  background-color: #f9f9f9;
+}
+
+.table-body {
+  max-width: 100%;
+  width: 100%;
+}
+
+.table-body tr td:first-child .cell {
+  position: relative;
+  width: 50%;
+  background-color: #f9f9f9;
+  outline: 1px solid #f9f9f9;
+}
+
+.table-body tr td:first-child .cell-time {
+  position: absolute;
+  bottom: -10px;
+
+  display: block;
+  height: max-content;
+  margin-left: 25px;
+  background-color: #f9f9f9;
+  font-size: 18px;
+  color: #333333;
+  z-index: 100;
+}
+
+td {
+  width: 12.5%;
+}
+
+.cell {
+  height: 60px;
+}
+
+.cell-event {
+  position: absolute;
+  top: 0;
+
+  display: flex;
+  flex-direction: column;
+
+  padding: 6px 0 6px 10px;
+  background-color: #eff5ff;
+  border-left: 14px solid #5898ff;
+  outline: 1px solid #5898ff;
+  overflow: hidden;
+  z-index: 10;
+}
+
+.cell span {
+  display: block;
+  width: 100%;
+
+  font-family: "Open-sans", sans-serif;
+  font-size: 13px;
+}
+
+.cell-event span {
+  display: inline-block;
+  font-family: "Open-sans", sans-serif;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  font-size: 13px;
+  color: #333;
+}
+
+.cell-head {
+  font-family: "Open-sans", sans-serif;
+}
+
+th:first-child .cell-head span {
+  display: block;
+  width: max-content;
+  margin: 0 auto 0 25px;
+}
+
+.cell-event .event-time,
+.cell-event .event-author {
+  font-size: 12px;
+}
+
+.cell-event .event-time {
+  max-width: 66px;
+}
+
+.event-title {
+  font-size: 13px;
+  font-weight: 700;
+  max-width: 100px;
+  color: #333;
+}
+
+/* EDIT SCHEDULE ================================================ */
+
+.popup-schedule.active {
+  display: block;
+}
+
+.popup-schedule .title {
+  font-size: 20px;
+  font-weight: 500;
+  color: #333;
+}
+
+.popup-schedule .inp-label {
+  display: block;
+  margin-top: 20px;
+  font-family: "Open-sans", sans-serif;
+  color: #333;
+}
+
+.popup-schedule .inp {
+  width: 100%;
+  height: 40px;
+  margin-top: 10px;
+  padding: 0 15px;
+  padding-right: 40px;
+  background-color: #f7f7f7;
+
+  border: none;
+  border-radius: 3px;
+  color: #333;
+  resize: none;
+}
+.popup-schedule .inp.active {
+  background-color: #eff5ff;
+  color: #5898ff;
+}
+.popup-schedule .inp:focus{
+  border: none !important;
+}
+
+.popup-schedule .label .inp::placeholder {
+  color: #959799;
+}
+
+.popup-schedule .select-inp::placeholder {
+  color: #424242;
+}
+
+.popup-schedule .select-time-wrapper {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+.popup-schedule .date-label {
+  display: block;
+  max-width: 150px;
+  width: 100%;
+}
+
+.popup-schedule .label .inp-date {
+  max-width: 140px;
+}
+
+.popup-schedule .time-label {
+  display: block;
+  max-width: 164px;
+  width: 100%;
+}
+
+.popup-schedule .inp-time {
+  max-width: 80px;
+}
+
+.popup-schedule .label .text-area {
+  height: 122px;
+  padding: 15px 15px;
+}
+
+.popup-schedule .label .text-area:focus{
+  outline: 2px solid #5898ff;
+}
+
+.popup-schedule .select {
+  margin-top: 10px;
+}
+
+.popup-schedule .select.active {
+  background-color: #fff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.popup-schedule .select .top {
+  border-radius: 3px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  pointer-events: all;
+}
+
+.popup-schedule .select .top .arrow svg{
+  transform: rotate(0);
+  transition: all 0.2s;
+}
+
+.popup-schedule .select.active .top .arrow svg{
+  fill: #5898ff;
+  top: 12px;
+  transform: rotate(-180deg);
+  transition: all 0.2s;
+}
+
+.popup-schedule .select .top .arrow .close{
+  display: none;
+  cursor: pointer;
+}
+
+.popup-schedule .select .top .arrow svg {
+  fill: #aeaeae;
+}
+
+.popup-schedule .select .inp {
+  margin-top: 0;
+  outline: none;
+}
+
+.popup-schedule .select.active .inp {
+  background-color: #fff;
+}
+
+.popup-schedule .select .arrow {
+  position: absolute;
+  top: 50%;
+  right: 16px;
+
+  transform: translateY(-50%);
+}
+
+.popup-schedule .select .arrow svg{
+  pointer-events: none;
+}
+
+.popup-schedule .select .options {
+  max-height: 0px;
+  padding: 0 15px;
+  overflow: hidden;
+  transition: max-height 0.5s;
+}
+
+.popup-schedule .select.active .options {
+  max-height: 200px;
+  transition: all 0.5s;
+}
+
+.popup-schedule .select .option {
+  margin-top: 10px;
+}
+
+.popup-schedule .select .option:first-child {
+  padding-top: 15px;
+}
+
+.popup-schedule .select .option:last-child {
+  padding-bottom: 15px;
+}
+
+.popup-schedule .select .option label {
+  font-family: "Open-sans", sans-serif;
+  font-size: 13px;
+}
+
+.popup-schedule .buttons {
+  display: flex;
+  gap: 25px;
+}
+
+/* EVENT ================================================ */
+
+.event-popup .title {
+  font-family: "Open-sans", sans-serif;
+  font-size: 20px;
+  color: #333;
+}
+
+.event-row {
+  padding: 20px 0;
+  border-top: 1px solid #eaeaea;
+}
+
+.event-row.first {
+  border: none;
+}
+
+.event-popup .date {
+  font-family: "Open-sans", sans-serif;
+  font-size: 13px;
+  margin-top: 8px;
+}
+
+.event-popup .event-text {
+  font-family: "Open-sans", sans-serif;
+  color: #333;
+}
+
+.event-popup .event-link {
+  display: block;
+  margin-top: 5px;
+  font-family: "Open-sans", sans-serif;
+  color: #5898ff;
+}
+
+.events-buttons {
+  display: flex;
+  gap: 25px;
+  margin-top: 20px;
+}
+
+/* DELETE EVENT ================================================ */
+
+.delete-event .popup-content {
+  max-width: 570px;
+}
+.delete-event .descr {
+  margin-top: 15px;
+  font-size: 14px;
+  color: #333;
+}
+.delete-event .link {
+  margin-top: 25px;
+  font-family: "Open-sans", sans-serif;
+  color: #5898ff;
+}
+
+.delete-event .buttons {
+  display: flex;
+  gap: 25px;
+}
+
+/* SELECT TIME ================================================ */
+
+.time-wrapper {
+  position: absolute;
+  right: 0;
+  top: calc(100% - 40px);
+
+  display: flex;
+  gap: 5px;
+  z-index: 100;
+}
+
+.select-time {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+
+  height: 40px;
+  width: 80px;
+  background-color: #f7f7f7;
+  transition: all 0.2s;
+}
+
+.select-time.left {
+  border-radius: 5px 0 0 5px;
+}
+.select-time.right {
+  border-radius: 0 5px 5px 0;
+}
+
+.select-time.active {
+  height: 322px;
+  background-color: #fff;
+  transition: all 0.2s;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.select-time .value {
+  padding: 11px 21px;
+  font-family: "Open-sans", sans-serif;
+  cursor: pointer;
+  user-select: none;
+}
+
+.select-time .value.selected {
+  background-color: #eff5ff;
+  color: #5898ff;
+}
+
+.select-time .options {
+  height: 282px;
+  width: 100%;
+  overflow: hidden scroll;
+}
+
+.select-time .option {
+  width: max-content;
+  margin: 0 auto;
+  padding: 5px 0;
+  font-family: "Open-sans", sans-serif;
+  cursor: pointer;
+  user-select: none;
+}
+.select-time .option:first-child {
+  margin-top: 10px;
+}
+.select-time .option:last-child {
+  margin-bottom: 10px;
+}
+
+.time-select-wrapper {
+  width: 165px;
+  display: flex;
+}
+
+.time-select-wrapper .label {
+  display: block;
+  font-family: "Open-sans", sans-serif;
+  margin-bottom: 10px;
+}
+
+.schedule {
+  overflow-y: scroll;
+  display: none;
+  background-color: #fff;
+  padding: 25px;
+}
+.schedule.active {
+  display: block;
+}
+
+.schedule-date {
+  font-weight: 600;
+  font-size: 18px;
+  color: #5898ff;
+  font-family: "Open-sans", sans-serif;
+}
+
+.schedule-item {
+  border-bottom: 1px dashed #333;
+  padding: 50px 0 50px 0;
+  width: 45%;
+}
+
+.schedule-item:first-child{
+  padding: 0px 0 50px 0;
+}
+
+.schedule-body {
+  display: flex;
+  gap: 52px;
+  margin-top: 25px;
+}
+
+.schedule-time {
+  font-family: "Proxima Nova", sans-serif;
+  text-decoration: underline;
+  font-size: 14px;
+  color: #333;
+}
+
+.schedule-title {
+  font-weight: 600;
+  font-family: "Open-sans", sans-serif;
+  font-size: 13px;
+  color: #333;
+}
+
+.schedule-from {
+  font-weight: 500;
+  font-family: "Open-sans", sans-serif;
+  font-size: 13px;
+  color: #333;
+}
+
+.schedule-candidate {
+  margin-top: 10px;
+}
+
+.schedule-candidate,
+.schedule-vacancy {
+  font-family: "Open-sans", sans-serif;
+  font-size: 13px;
+  color: #333;
+}
+
+.calendar-popup .popup-content {
+  box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.324);
+}
+
+.popup-close {
+  position: absolute;
+  right: 25px;
+  top: 25px;
+  width: 13px;
+  height: 13px;
+  cursor: pointer;
+}
+
+.popup-close img {
+  width: 100%;
+}
+
+.calendar-day {
+  display: none;
+  max-height: 775px;
+  background-color: #f9f9f9;
+  overflow-y: scroll;
+}
+
+.calendar-day.active {
+  display: block;
+}
+
+.calendar-day .top {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 50px;
+  width: 100%;
+  background-color: #fff;
+}
+
+.calendar-day .top .prev {
+  height: 30px;
+  transform: rotate(180deg);
+}
+.calendar-day .top .next {
+  height: 30px;
+}
+
+.calendar-day .body {
+  position: relative;
+  padding: 0 25px;
+}
+
+.calendar-day .day-row {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 65px;
+}
+.calendar-day .row-time {
+  margin-right: 12.5px;
+}
+.calendar-day .row-line {
+  width: 100%;
+  border-bottom: 1px dashed #333;
+}
+
+.day-event {
+  position: absolute;
+  top: 0;
+  left: 70px;
+  right: 25px;
+
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  flex-wrap: wrap;
+  gap: 2px;
+
+  padding: 8.5px 15px;
+  background-color: #eff5ff;
+  border: 1px solid #5898ff;
+  border-left: 7px solid #5898ff;
+
+  font-family: "Open-sans", sans-serif;
+  overflow: hidden;
+}
+
+.day-event.passed {
+  background-color: #eaeaea;
+  border: 1px solid #d9d9d9;
+  border-left: 7px solid #d9d9d9;
+}
+
+.day-event .event-time {
+  font-size: 12px;
+  width: max-content;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+.day-event .event-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: #333;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+.day-event .event-from {
+  font-size: 13px;
+  width: max-content;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.day-timeline {
+  position: absolute;
+  right: 25px;
+  height: 12px;
+  background-color: #5898ff;
+  opacity: 0.5;
+  left: 70px;
+}
+
+@media (max-width: 1200px) {
+  .schedule-item{
+    width: 60%;
+  }
+}
+
+@media (max-width: 1060px) {
+  table .arrow.prev {
+    left: 11%;
+  }
+  table .arrow.next {
+    right: 3px;
+  }
+}
+
+@media (max-width: 900px) {
+  .schedule-item{
+    width: 80%;
+  }
+}
+
+@media (max-width: 767px) {
+  .buttons {
+    display: block;
+  }
+  .body-buttons {
+    flex-wrap: wrap;
+  }
+  .day-button {
+    min-width: 96px;
+  }
+  .add-events {
+    min-width: 207.5px;
+    margin: 0;
+  }
+  .show-schedule {
+    min-width: 207.5px;
+    margin-top: 15px;
+  }
+  .table-body tr td:first-child .cell {
+    width: calc(100% - 1px);
+  }
+  .table-body tr td:first-child .cell-time {
+    bottom: -8px;
+    width: auto;
+    margin-left: 5px;
+    overflow: visible;
+    font-size: 12px;
+  }
+  th:first-child .cell-head span {
+    margin: 0 auto 0 5px;
+  }
+  table .arrow.prev {
+    left: 11%;
+  }
+  table .arrow.next {
+    right: 0px;
+  }
+  .schedule-item{
+    width: 100%;
+  }
+}
+
+@media (max-width: 576px) {
+  .descr {
+    font-size: 13px;
+  }
+  .cell-head .head-date {
+    font-size: 10px;
+  }
+  .table-body tr td:first-child .cell-time {
+    margin-left: 3px;
+  }
+  th:first-child .cell-head span {
+    margin: 0 auto -5px 1px;
+  }
+  .popup-close {
+    top: 12px;
+    right: 12px;
+  }
+  table .arrow.next, table .arrow.prev{
+    top: 18px;
+  }
+  table .arrow img{
+    width: 12px;
+  }
+}
+
+.selected-option {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 15px;
+  margin-top: 8px;
+  background-color: #eff5ff;
+  border-radius: 5px;
+}
+
+.selected-option span {
+  font-family: "Open-sans", sans-serif;
+  color: #5898ff;
+}
+
+.selected-option .close-option {
+  position: relative;
+  cursor: pointer;
+}
+
+.selected-option .close-option::before,
+.selected-option .close-option::after {
+  content: "";
+  position: absolute;
+  height: 1px;
+  width: 10px;
+  background-color: #5898ff;
+  transform: rotate(45deg);
+  right: 0;
+}
+
+.selected-option .close-option::before {
+  transform: rotate(-45deg);
+}
+
+.sd-container {
+  position: relative;
+  float: left;
+  padding: 5px 0;
+  background-color: #f7f7f7;
+
+  border: none;
+  border-radius: 3px;
+  color: #333;
+  resize: none;
+}
+
+.sd {
+  opacity: 0;
+  padding: 5px 10px;
+  height: 30px;
+  width: 150px;
+}
+
+.open-button {
+  position: absolute;
+  top: 10px;
+  right: 12px;
+  width: 16px;
+  height: 18px;
+  background: #f7f7f7;
+  cursor: pointer;
+}
+
+.open-button button {
+  border: none;
+  background: transparent;
+}
+
+.sd-container .text {
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-family: "Open-sans", sans-serif;
+  color: #424242;
+  font-size: 13px;
+}
+
+.date-label .label {
+  display: block;
+  font-family: "Open-sans", sans-serif;
+  margin-bottom: 10px;
+}
+
+.sd-container .open-button .open{
+  display: block;
+}
+
+.sd-container .open-button .close{
+  display: none;
+}
+.sd-container.selected .open-button .open{
+  display: none;
+}
+
+.sd-container.selected .open-button .close{
+  display: block;
+  position: relative;
+  top: 3px;
+}
+
+.sd-container.selected .text{
+  color: #5898ff;
+}
+
+.sd-container.selected {
+  background-color: #eff5ff;
+}
+
+.overview{
+  width: 100%;
+  height: 100%;
+  background-color: #cdcdcd85;
+  overflow-y: scroll;
+}
