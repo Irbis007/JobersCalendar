@@ -264,7 +264,7 @@ td {
   display: inline-block;
   font-family: "Open-sans", sans-serif;
   text-overflow: ellipsis;
-  overflow: hidden;
+  overflow-x: hidden;
   white-space: nowrap;
   font-size: 13px;
   color: #333;

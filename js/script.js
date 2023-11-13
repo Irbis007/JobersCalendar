@@ -151,20 +151,26 @@ weekBtnPrev.addEventListener("click", () => {
     item.innerHTML = "";
     item.remove();
   });
+  console.log(2)
   weekCount--;
   generateWeeklyCalendar(weekCount);
   drawWeekEvents(weekCount);
   drawThead();
+  addEventForEventCell()
+  giveOrderforEvents()
 });
 weekBtnNext.addEventListener("click", () => {
   document.querySelectorAll("thead").forEach((item) => {
     item.innerHTML = "";
     item.remove();
   });
+  console.log(2)
   weekCount++;
   generateWeeklyCalendar(weekCount);
   drawWeekEvents(weekCount);
   drawThead();
+  addEventForEventCell()
+  giveOrderforEvents()
 });
 
 rows.forEach((item) => {
@@ -268,15 +274,18 @@ function drawWeekEvents() {
 
 drawWeekEvents();
 
-document.querySelectorAll(".cell-event.event").forEach((item) => {
-  if (item.clientHeight < 55) {
-    item.style.alignItems = "center";
-    item.style.flexDirection = "row";
-    item.children[0].style.order = 2;
-    item.children[1].style.order = 1;
-    item.children[2].style.display = "none";
-  }
-});
+function giveOrderforEvents() {
+  document.querySelectorAll(".cell-event.event").forEach((item) => {
+    if (item.clientHeight < 55) {
+      item.style.alignItems = "center";
+      item.style.flexDirection = "row";
+      item.children[0].style.order = 2;
+      item.children[1].style.order = 1;
+      item.children[2].style.display = "none";
+    }
+  });
+}
+giveOrderforEvents()
 
 const blocks = document.querySelectorAll(".cell-event");
   
@@ -502,6 +511,7 @@ function renderDayEvents(num) {
 renderDayEvents();
 
 function addEventForEventCell() {
+  eventCell = document.querySelectorAll(".event");
   eventCell.forEach((item) => {
     item.addEventListener("click", () => {
       eventPopup.classList.add("active");
