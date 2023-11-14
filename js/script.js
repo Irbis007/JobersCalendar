@@ -151,7 +151,6 @@ weekBtnPrev.addEventListener("click", () => {
     item.innerHTML = "";
     item.remove();
   });
-  console.log(2)
   weekCount--;
   generateWeeklyCalendar(weekCount);
   drawWeekEvents(weekCount);
@@ -164,7 +163,6 @@ weekBtnNext.addEventListener("click", () => {
     item.innerHTML = "";
     item.remove();
   });
-  console.log(2)
   weekCount++;
   generateWeeklyCalendar(weekCount);
   drawWeekEvents(weekCount);
@@ -800,35 +798,31 @@ document.addEventListener("click", (e) => {
     newScheduleSelectTimeRight.parentElement.classList.remove("active");
   }
   if (
-    !e.target.classList.contains("datapicker-wrapper") &&
-    !e.target.classList.contains("selected_date") &&
-    !e.target.classList.contains("text") &&
-    !e.target.classList.contains("open")
+    !e.target.closest('.sd-container') &&   
+     !e.target.closest('.select-year') &&
+    !e.target.closest('.select-month')
   ) {
     datePicker.forEach((item, i) => {
       item.style.display = "none";
     });
   }
   if (
-    !e.target.classList.contains("select-month") &&
-    !e.target.classList.contains("month-text") &&
-    !e.target.classList.contains("month-options") &&
-    !e.target.classList.contains("selected_date") 
+    !e.target.closest('.select-month') &&
+    e.target.id != 'new-date'
   ) {
-    document.querySelectorAll(".select-month").forEach((item) => {
+    document.querySelectorAll(".select-month").forEach((item, i) => {
       item.children[1].classList.remove("active");
     });
   } 
   if (
-    !e.target.classList.contains("select-year") &&
-    !e.target.classList.contains("year-text") &&
-    !e.target.classList.contains("year-options") &&
-    !e.target.classList.contains("selected_date") 
+    !e.target.closest('.select-year') &&
+    e.target.id != 'new-date'
   ) {
-    document.querySelectorAll(".select-year").forEach((item) => {
+    document.querySelectorAll(".select-year").forEach((item, i) => {
       item.children[1].classList.remove("active");
     });
   } 
+  console.log()
 });
 
 const dateText = document.querySelectorAll(".sd-container .text");
@@ -1042,7 +1036,6 @@ function someName() {
   
     const selectMonth = document.querySelectorAll('.month-option')
     const selectYear = document.querySelectorAll('.year-option')
-  
   
     selectMonth.forEach(item => {
       item.addEventListener('click', () => {
