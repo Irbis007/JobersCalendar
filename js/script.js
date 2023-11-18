@@ -6,10 +6,10 @@ const hour = new Date().getHours();
 let weekCount = 0;
 const events = [
   {
-    date: new Date(year, month, 13),
+    date: new Date(year, month, 18),
     time: {
-      start: new Date(year, month, 13, 1, 0),
-      end: new Date(year, month, 13, 5, 0),
+      start: new Date(year, month, 18, 1, 0),
+      end: new Date(year, month, 18, 5, 0),
     },
     vacancy: ["Бариста ID 2292", "Менеджер по продажам ID 2919", "Слесарь ID 1202"],
     candidate: ["Валиков Антон", "Григорьев Роман", "Парфенко Александрz"],
@@ -67,6 +67,135 @@ const events = [
   },
 ];
 
+class Calendar {
+  constructor(divId) {
+    this.divId = divId;
+    this.daysOfWeek = ["Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс"];
+    this.months = [
+      "Январь",
+      "Февраль",
+      "Март",
+      "Апрель",
+      "Май",
+      "Июнь",
+      "Июль",
+      "Август",
+      "Сентябрь",
+      "Октябрь",
+      "Ноябрь",
+      "Декабрь",
+    ];
+
+    const currentDate = new Date();
+    this.currMonth = currentDate.getMonth();
+    this.currYear = currentDate.getFullYear();
+    this.currDay = currentDate.getDate();
+  }
+
+  showCurrent(y, m, item) {
+    this.showMonth(y, m, item);
+  }
+
+  showMonth(y, m, item) {
+    const firstDayOfMonth = new Date(y, m, 7).getDay();
+    const lastDateOfMonth = new Date(y, m + 1, 0).getDate();
+    const lastDayOfLastMonth =
+      m === 0 ? new Date(y - 1, 11, 0).getDate() : new Date(y, m, 0).getDate();
+
+    let years = [];
+    for (let i = this.currYear - 5; i < this.currYear + 5; i++) {
+      years.push(i);
+    }
+
+    let html = "<table>";
+
+    html += "<thead><tr>";
+    html += `<td colspan="7"><span class="select-month">
+      <span class="month-text">${this.months[m]}</span>
+      <div class="month-options">
+        ${this.months.map((item) => `<div class="month-option">${item}</div>`).join("")}
+      </div>
+      </span> / <span class="select-year">
+        <span class="year-text">${y}</span>
+        <div class="year-options">
+        ${years.map((item) => `<div class="year-option">${item}</div>`).join("")}
+        </div>
+      </span></td>`;
+    html += "</tr></thead>";
+
+    html += '<tr class="days">';
+    for (let i = 0; i < this.daysOfWeek.length; i++) {
+      html += `<td class="day-ofWeek">${this.daysOfWeek[i]}</td>`;
+    }
+    html += "</tr>";
+
+    let i = 1;
+    do {
+      let dow = new Date(y, m, i).getDay();
+
+      if (dow === 1) {
+        html += "<tr>";
+      } else if (i === 1) {
+        html += "<tr>";
+        let k = lastDayOfLastMonth - firstDayOfMonth + 1;
+        for (let j = 0; j < firstDayOfMonth; j++) {
+          html += `<td class="not-current datapicker-day">${k}</td>`;
+          k++;
+        }
+      }
+
+      const chk = new Date();
+      const chkY = chk.getFullYear();
+      const chkM = chk.getMonth();
+      if (y === this.currYear && m === this.currMonth && i === this.currDay) {
+        html += '<td class="today datapicker-day">' + i + "</td>";
+      } else if (chkY === this.currYear && chkM === this.currMonth && i > this.currDay) {
+        html += '<td class="normal next-day datapicker-day">' + i + "</td>";
+      } else {
+        html += '<td class="normal datapicker-day">' + i + "</td>";
+      }
+
+      if (dow === 0) {
+        html += "</tr>";
+      } else if (i === lastDateOfMonth) {
+        let k = 1;
+        for (dow; dow < 7; dow++) {
+          html += `<td class="not-current next-day datapicker-day">${k}</td>`;
+          k++;
+        }
+        if ((dow = 6)) {
+          html += "<tr>";
+          for (dow; dow < 13; dow++) {
+            html += `<td class="not-current next-day datapicker-day">${k}</td>`;
+            k++;
+          }
+          html += "</tr>";
+        }
+      }
+
+      i++;
+    } while (i <= lastDateOfMonth);
+
+    html += `
+      <tfoot>
+        <tr>
+          <td class="last-cell" colspan="7">
+            выберите период
+          </td>
+        </tr>
+      </tfoot>
+    `;
+    html += "</table>";
+
+    item.innerHTML = html;
+  }
+
+  renderCalendar(y, m, item) {
+    this.showMonth(y, m, item);
+    someName();
+  }
+}
+
 function createId() {
   return Math.random() * (10000 - -10000) + -10000;
 }
@@ -86,7 +215,9 @@ function drawThead() {
     const isTimeCell = i === 0;
     const content = isTimeCell
       ? "Время"
-      : generateWeeklyCalendar(weekCount)[i - 1].dayOfWeek + " " + generateWeeklyCalendar(weekCount)[i - 1].date;
+      : generateWeeklyCalendar(weekCount)[i - 1].dayOfWeek +
+        " " +
+        generateWeeklyCalendar(weekCount)[i - 1].date;
     headCell.innerHTML = `
       <div class="cell-head">
         <span class="head-date">${content}</span>
@@ -108,8 +239,8 @@ for (let i = 0; i < lastHour; i++) {
 
     if (k === 0) {
       const newTime = new Date(year, month, day, i, 0);
-      const formattedTime = (i === lastHour - 1) ? "00:00" : newTime.toTimeString().slice(0, 5);
-      
+      const formattedTime = i === lastHour - 1 ? "00:00" : newTime.toTimeString().slice(0, 5);
+
       cell.innerHTML = `
         <div class="cell">
           <span class="cell-time">${formattedTime}</span>
@@ -146,6 +277,8 @@ const weekBtnPrev = document.querySelector(".arrow.prev");
 const weekBtnNext = document.querySelector(".arrow.next");
 
 const thead = document.querySelectorAll(".calendar-body thead");
+const calendar = new Calendar();
+
 weekBtnPrev.addEventListener("click", () => {
   document.querySelectorAll("thead").forEach((item) => {
     item.innerHTML = "";
@@ -155,8 +288,11 @@ weekBtnPrev.addEventListener("click", () => {
   generateWeeklyCalendar(weekCount);
   drawWeekEvents(weekCount);
   drawThead();
-  addEventForEventCell()
-  giveOrderforEvents()
+  addEventForEventCell();
+  giveOrderforEvents();
+  document.querySelectorAll(".divCal").forEach((item) => {
+    calendar.showCurrent(year, month, item);
+  });
 });
 weekBtnNext.addEventListener("click", () => {
   document.querySelectorAll("thead").forEach((item) => {
@@ -167,8 +303,11 @@ weekBtnNext.addEventListener("click", () => {
   generateWeeklyCalendar(weekCount);
   drawWeekEvents(weekCount);
   drawThead();
-  addEventForEventCell()
-  giveOrderforEvents()
+  addEventForEventCell();
+  giveOrderforEvents();
+  document.querySelectorAll(".divCal").forEach((item) => {
+    calendar.showCurrent(year, month, item);
+  });
 });
 
 rows.forEach((item) => {
@@ -190,7 +329,7 @@ function accardeonToggle(list) {
         item.children[1].children[0].style.display = "none";
         item.children[1].children[1].style.display = "block";
       } else {
-        if(item.children[1] && item.children[1].children[1] && item.children[1].children[0]){
+        if (item.children[1] && item.children[1].children[1] && item.children[1].children[0]) {
           item.children[1].children[1].style.display = "none";
           item.children[1].children[0].style.display = "block";
         }
@@ -198,26 +337,6 @@ function accardeonToggle(list) {
     });
   });
 }
-
-const closeOptionsBtn = document.querySelectorAll(".popup-schedule .select .top .arrow .close");
-
-closeOptionsBtn.forEach((item, i) => {
-  item.addEventListener("click", () => {
-    item.parentElement.parentElement.children[0].value = "";
-    item.parentElement.parentElement.children[0].classList.remove("active");
-    scheduleOptions.forEach((checkbox, idx) => {
-      if (idx + 1 <= 3 && i + 1 == 1) {
-        checkbox.checked = false;
-      } else if (idx + 1 > 3 && idx + 1 <= 6 && i + 1 == 2) {
-        checkbox.checked = false;
-      } else if (idx + 1 > 6 && idx + 1 <= 9 && i + 1 == 3) {
-        checkbox.checked = false;
-      } else if (idx + 1 > 9 && idx + 1 <= 12 && i + 1 == 4) {
-        checkbox.checked = false;
-      }
-    });
-  });
-});
 
 let firstDayWeek = new Date(
   year,
@@ -239,14 +358,22 @@ window.addEventListener("resize", () => {
 const eventInfo = [];
 
 function drawWeekEvents() {
-  const firstDayWeek = new Date(year, generateWeeklyCalendar(weekCount)[0].month, generateWeeklyCalendar(weekCount)[0].date);
-  document.querySelectorAll(".cell-event.event").forEach(item => item.remove());
+  const firstDayWeek = new Date(
+    year,
+    generateWeeklyCalendar(weekCount)[0].month,
+    generateWeeklyCalendar(weekCount)[0].date
+  );
+  document.querySelectorAll(".cell-event.event").forEach((item) => item.remove());
 
   for (const event of events) {
     const eventDay = (event.date.getTime() - firstDayWeek.getTime()) / 1000 / 60 / 60 / 24;
     const left = cellWidth + cellWidth * eventDay;
-    const top = ((event.time.start.getTime() - event.date.getTime() + 3600000) / 1000 / 60 / 60) * 61;
-    const bottom = tbodyHeight - ((event.time.end.getTime() - event.date.getTime() + 3600000) / 1000 / 60 / 60) * 61 + 9;
+    const top =
+      ((event.time.start.getTime() - event.date.getTime() + 3600000) / 1000 / 60 / 60) * 61;
+    const bottom =
+      tbodyHeight -
+      ((event.time.end.getTime() - event.date.getTime() + 3600000) / 1000 / 60 / 60) * 61 +
+      9;
 
     const lastWeekDay = generateWeeklyCalendar(weekCount)[6].date;
     const calendarlastDayMonth = generateWeeklyCalendar(weekCount)[6].month;
@@ -263,12 +390,10 @@ function drawWeekEvents() {
           <span class="event-title">${event.title}</span>
           <span class="event-author">от ${event.from}</span>
         </div>`;
-        eventInfo.push(event)
+      eventInfo.push(event);
     }
   }
 }
-
-
 
 drawWeekEvents();
 
@@ -283,21 +408,25 @@ function giveOrderforEvents() {
     }
   });
 }
-giveOrderforEvents()
+giveOrderforEvents();
 
 const blocks = document.querySelectorAll(".cell-event");
-  
+
 function updateBlockPositions() {
   blocks.forEach((item, i) => {
     tbodyHeight = tbody.clientHeight;
     cellWidth = tbodyWidth / 8;
-    const left = cellWidth + cellWidth * (eventInfo[i].date - firstDayWeek) / 1000 / 60 / 60 / 24;
+    const left = cellWidth + (cellWidth * (eventInfo[i].date - firstDayWeek)) / 1000 / 60 / 60 / 24;
     const top =
-    ((eventInfo[i].time.start.getTime() - eventInfo[i].date.getTime() + 3600000) / 1000 / 60 / 60) *
-    61;
+      ((eventInfo[i].time.start.getTime() - eventInfo[i].date.getTime() + 3600000) /
+        1000 /
+        60 /
+        60) *
+      61;
     const bottom =
       tbodyHeight -
-      ((eventInfo[i].time.end.getTime() - eventInfo[i].date.getTime() + 3600000) / 1000 / 60 / 60) * 61;
+      ((eventInfo[i].time.end.getTime() - eventInfo[i].date.getTime() + 3600000) / 1000 / 60 / 60) *
+        61;
     item.style.left = left + "px";
     item.style.top = top + "px";
     item.style.bottom = bottom + "px";
@@ -383,7 +512,6 @@ function selectTimeOption(time, value, i) {
     item.addEventListener("click", () => {
       value.innerHTML = item.textContent;
       i.parentElement.classList.remove("active");
-      i.parentElement.style.border = "1px solid transparent";
     });
   });
 }
@@ -592,7 +720,7 @@ function getEventTime(event) {
     event.time.start.getMinutes() < 10
       ? `0${event.time.start.getMinutes()}`
       : event.time.start.getMinutes()
-  }:${
+  }-${
     event.time.end.getHours() < 10 ? `0${event.time.end.getHours()}` : event.time.end.getHours()
   }:${
     event.time.end.getMinutes() < 10
@@ -606,9 +734,9 @@ function getEventTime(event) {
 function generateWeeklyCalendar(num) {
   const today = new Date(year, month, day + num * 7);
   const startOfWeek = new Date(today);
-  startOfWeek.setDate(today.getDate() - ((today.getDay() - 1 + 7) % 7)); // Устанавливаем начало недели на понедельник
+  startOfWeek.setDate(today.getDate() - ((today.getDay() - 1 + 7) % 7));
   const endOfWeek = new Date(startOfWeek);
-  endOfWeek.setDate(endOfWeek.getDate() + 6); // Устанавливаем конец недели на воскресенье
+  endOfWeek.setDate(endOfWeek.getDate() + 6);
 
   const calendar = [];
   let currentDate = new Date(startOfWeek);
@@ -735,48 +863,37 @@ function checkScheduleCheckboxValid(elem) {
 
 editScheduleVacancyOptions.forEach((item, i) => {
   onToggleOptions(item, i, editSelectVacancyInp);
-  closeOptions(editSelectVacancyInp);
 });
 editScheduleCandidateOptions.forEach((item, i) => {
   onToggleOptions(item, i, editSelectCandidateInp);
-  closeOptions(editSelectCandidateInp);
 });
 newScheduleVacancyOptions.forEach((item, i) => {
   onToggleOptions(item, i, newSelectVacancyInp);
-  closeOptions(newSelectVacancyInp);
 });
 newScheduleCandidateOptions.forEach((item, i) => {
   onToggleOptions(item, i, newSelectCandidateInp);
-  closeOptions(newSelectCandidateInp);
 });
+
+
+let text = ''
 
 function onToggleOptions(item, i, input) {
   item.addEventListener("change", () => {
     if (item.checked) {
-      if (input.value.length) {
-        input.value += `, ${item.parentElement.children[1].textContent}`;
+      if (text.length) {
+        text += `, ${item.parentElement.children[1].textContent}`;
       } else {
-        input.value += `${item.parentElement.children[1].textContent}`;
+        text += `${item.parentElement.children[1].textContent}`;
       }
     } else {
-      let arr = [];
-      arr = input.value.split(", ");
-      arr.forEach((el) => {
-        if (el == item.parentElement.children[1].textContent) {
-          input.value = arr.filter((i) => el !== i).join(", ");
-        }
-      });
+      text = text.split(', ').filter(i => i != item.parentElement.children[1].textContent).join(', ')
     }
-    if (input.value.length) {
-      input.classList.add("active");
-      input.parentElement.style.border = "1px solid transparent";
-    } else {
-      input.classList.remove("active");
-    }
+
+    closeOptions(input, text);
   });
 }
 
-function closeOptions(item) {
+function closeOptions(item, textProp) {
   document.addEventListener("click", (e) => {
     if (
       !e.target.classList.contains("option") &&
@@ -786,6 +903,12 @@ function closeOptions(item) {
       !e.target.classList.contains("checkbox-text")
     ) {
       item.parentElement.parentElement.classList.remove("active");
+      item.value = textProp || '';
+      text = ''
+      if (item.value.length) {
+        item.classList.add("active");
+        item.parentElement.style.border = "1px solid transparent";
+      }
     }
   });
 }
@@ -798,31 +921,24 @@ document.addEventListener("click", (e) => {
     newScheduleSelectTimeRight.parentElement.classList.remove("active");
   }
   if (
-    !e.target.closest('.sd-container') &&   
-     !e.target.closest('.select-year') &&
-    !e.target.closest('.select-month')
+    !e.target.closest(".sd-container") &&
+    !e.target.closest(".select-year") &&
+    !e.target.closest(".select-month")
   ) {
     datePicker.forEach((item, i) => {
       item.style.display = "none";
     });
   }
-  if (
-    !e.target.closest('.select-month') &&
-    e.target.id != 'new-date'
-  ) {
+  if (!e.target.closest(".select-month") && e.target.id != "new-date") {
     document.querySelectorAll(".select-month").forEach((item, i) => {
       item.children[1].classList.remove("active");
     });
-  } 
-  if (
-    !e.target.closest('.select-year') &&
-    e.target.id != 'new-date'
-  ) {
+  }
+  if (!e.target.closest(".select-year") && e.target.id != "new-date") {
     document.querySelectorAll(".select-year").forEach((item, i) => {
       item.children[1].classList.remove("active");
     });
-  } 
-  console.log()
+  }
 });
 
 const dateText = document.querySelectorAll(".sd-container .text");
@@ -831,6 +947,25 @@ const dateValue = document.querySelectorAll(".selected_date");
 const dateBtn = document.querySelectorAll(".sd-container");
 const dateInp = document.querySelectorAll(".sd-container input");
 const datePicker = document.querySelectorAll(".sd-container .datapicker-wrapper");
+const closeOptionsBtn = document.querySelectorAll(".popup-schedule .select .top .arrow .close");
+
+closeOptionsBtn.forEach((item, i) => {
+  item.addEventListener("click", () => {
+    item.parentElement.parentElement.children[0].value = "";
+    item.parentElement.parentElement.children[0].classList.remove("active");
+    scheduleOptions.forEach((checkbox, idx) => {
+      if (idx + 1 <= 3 && i + 1 == 1) {
+        checkbox.checked = false;
+      } else if (idx + 1 > 3 && idx + 1 <= 6 && i + 1 == 2) {
+        checkbox.checked = false;
+      } else if (idx + 1 > 6 && idx + 1 <= 9 && i + 1 == 3) {
+        checkbox.checked = false;
+      } else if (idx + 1 > 9 && idx + 1 <= 12 && i + 1 == 4) {
+        checkbox.checked = false;
+      }
+    });
+  });
+});
 
 dateBtn.forEach((item, i) => {
   item.addEventListener("click", (e) => {
@@ -838,135 +973,7 @@ dateBtn.forEach((item, i) => {
   });
 });
 
-const svgElement = `
-<svg width="19" height="20" viewBox="0 0 19 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-<g clip-path="url(#clip0_1203_2232)">
-<path d="M15.4375 3.46875H3.5625C3.23458 3.46875 2.96875 3.73458 2.96875 4.0625V15.9375C2.96875 16.2654 3.23458 16.5312 3.5625 16.5312H15.4375C15.7654 16.5312 16.0312 16.2654 16.0312 15.9375V4.0625C16.0312 3.73458 15.7654 3.46875 15.4375 3.46875Z" stroke="#5898FF" stroke-linecap="round" stroke-linejoin="round"/>
-<path d="M13.0625 2.28125V4.65625" stroke="#5898FF" stroke-linecap="round" stroke-linejoin="round"/>
-<path d="M5.9375 2.28125V4.65625" stroke="#5898FF" stroke-linecap="round" stroke-linejoin="round"/>
-<path d="M2.96875 7.03125H16.0312" stroke="#5898FF" stroke-linecap="round" stroke-linejoin="round"/>
-</g>
-<defs>
-<clipPath id="clip0_1203_2232">
-<rect width="19" height="19" fill="white" transform="translate(0 0.5)"/>
-</clipPath>
-</defs>
-</svg>
-`;
-
-class Calendar {
-  constructor(divId) {
-    this.divId = divId;
-    this.daysOfWeek = ["Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс"];
-    this.months = [
-      "Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", 
-      "Июль", "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь"
-    ];
-
-    const currentDate = new Date();
-    this.currMonth = currentDate.getMonth();
-    this.currYear = currentDate.getFullYear();
-    this.currDay = currentDate.getDate();
-  }
-
-  showCurrent(y, m, item) {
-    this.showMonth(y, m, item);
-  }
-
-  showMonth(y, m, item) {
-    
-    const firstDayOfMonth = new Date(y, m, 7).getDay();
-    const lastDateOfMonth = new Date(y, m + 1, 0).getDate();
-    const lastDayOfLastMonth = m === 0 ? new Date(y - 1, 11, 0).getDate() : new Date(y, m, 0).getDate();
-
-    let years = []
-    for(let i = this.currYear - 5; i < this.currYear + 5; i++){
-      years.push(i)
-    }
-
-
-    let html = "<table>";
-
-    html += "<thead><tr>";
-    html += `<td colspan="7"><span class="select-month">
-      <span class="month-text">${this.months[m]}</span>
-      <div class="month-options">
-        ${this.months.map((item) => `<div class="month-option">${item}</div>`).join("")}
-      </div>
-      </span> / <span class="select-year">
-        <span class="year-text">${y}</span>
-        <div class="year-options">
-        ${years.map((item) => `<div class="year-option">${item}</div>`).join("")}
-        </div>
-      </span></td>`;
-    html += "</tr></thead>";
-
-    html += '<tr class="days">';
-    for (let i = 0; i < this.daysOfWeek.length; i++) {
-      html += `<td class="day-ofWeek">${this.daysOfWeek[i]}</td>`;
-    }
-    html += "</tr>";
-
-    let i = 1;
-    do {
-      let dow = new Date(y, m, i).getDay();
-
-      if (dow === 1) {
-        html += "<tr>";
-      } else if (i === 1) {
-        html += "<tr>";
-        let k = lastDayOfLastMonth - firstDayOfMonth + 1;
-        for (let j = 0; j < firstDayOfMonth; j++) {
-          html += `<td class="not-current datapicker-day">${k}</td>`;
-          k++;
-        }
-      }
-
-      const chk = new Date();
-      const chkY = chk.getFullYear();
-      const chkM = chk.getMonth();
-      if (chkY === this.currYear && chkM === this.currMonth && i === this.currDay) {
-        html += '<td class="today datapicker-day">' + i + "</td>";
-      } else if (chkY === this.currYear && chkM === this.currMonth && i > this.currDay) {
-        html += '<td class="normal next-day datapicker-day">' + i + "</td>";
-      } else {
-        html += '<td class="normal datapicker-day">' + i + "</td>";
-      }
-
-      if (dow === 0) {
-        html += "</tr>";
-      } else if (i === lastDateOfMonth) {
-        let k = 1;
-        for (dow; dow < 7; dow++) {
-          html += `<td class="not-current next-day datapicker-day">${k}</td>`;
-          k++;
-        }
-      }
-
-      i++;
-    } while (i <= lastDateOfMonth);
-
-    html += `
-      <tfoot>
-        <tr>
-          <td class="last-cell" colspan="7">
-            выберите период
-          </td>
-        </tr>
-      </tfoot>
-    `;
-    html += "</table>";
-
-    item.innerHTML = html;
-  }
-
-  renderCalendar(y,m,item) {
-    this.showMonth(y, m, item);
-    someName()
-  }
-}
-
-document.addEventListener('DOMContentLoaded', () =>{
+document.addEventListener("DOMContentLoaded", () => {
   const calendar = new Calendar("divCal");
   const currentDate = new Date();
   const currMonth = currentDate.getMonth();
@@ -974,100 +981,154 @@ document.addEventListener('DOMContentLoaded', () =>{
   document.querySelectorAll(".divCal").forEach((item) => {
     calendar.showCurrent(currYear, currMonth, item);
   });
-  someName()
-})
+  someName();
+});
 
 const currentDate = new Date();
 let currMonth = currentDate.getMonth();
 let currYear = currentDate.getFullYear();
 
 function someName() {
+  const calendar = new Calendar("divCal");
 
-    const calendar = new Calendar("divCal");
+  dateValue.forEach((item, i) => {
+    const parentClassList = item.closest(".sd-container").classList[0];
+    const datapickerDays = document.querySelectorAll(`.${parentClassList} .datapicker-day`);
+    const dateContainer = document.querySelectorAll(".sd-container");
+    const dateClose = document.querySelectorAll(".sd-container .open-button .close");
 
-    
-    dateValue.forEach((item, i) => {
-      const parentClassList = item.closest('.sd-container').classList[0];
-      const datapickerDays = document.querySelectorAll(`.${parentClassList} .datapicker-day`);
-      const dateContainer = document.querySelectorAll(".sd-container");
-      const dateClose = document.querySelectorAll(".sd-container .open-button .close");
-      
-      
-      datapickerDays.forEach((day) => {
-        day.addEventListener("click", () => {
-          const formattedDay = day.textContent.padStart(2, '0');
-          const formattedMonth = currMonth.toString().padStart(2, '0');
-          item.value = `${currYear}-${formattedMonth}-${formattedDay}`;
-          dateText[i].textContent = item.value;
-          dateContainer[i].classList.add("selected");
-          dateContainer[i].style.border = "1px solid transparent";
-        });
-      });
-    
-      dateClose[i].addEventListener("click", (e) => {
-        dateContainer[i].classList.remove("selected");
-        dateText[i].textContent = "Календарь";
+    datapickerDays.forEach((day) => {
+      day.addEventListener("click", () => {
+        const formattedDay = day.textContent.padStart(2, "0");
+        const formattedMonth = (currMonth + 1).toString().padStart(2, "0");
+        item.value = `${formattedDay}-${formattedMonth}-${currYear}`;
+        dateText[i].textContent = item.value;
+        dateContainer[i].classList.add("selected");
+        dateContainer[i].style.border = "1px solid transparent";
       });
     });
-  
-  
-    document.addEventListener('click', (event) => {
-      var dropdown = document.querySelectorAll('.select-month');
-      var dropdownContent = document.querySelectorAll('.month-options');
-      
-      dropdown.forEach((item, i) => {
-        if (event.target.closest('.select-month') === item && event.target.classList && !event.target.classList.contains('month-option')) {
-          dropdownContent[i].classList.add('active')
-        }
-      })
-    });
 
-    document.addEventListener('click', (event) => {
-      var dropdown = document.querySelectorAll('.select-year');
-      var dropdownContent = document.querySelectorAll('.year-options');
-      
-      dropdown.forEach((item, i) => {
-        if (event.target.closest('.select-year') === item && event.target.classList && !event.target.classList.contains('year-option')) {
-          dropdownContent[i].classList.add('active')
-        }
-      })
+    dateClose[i].addEventListener("click", (e) => {
+      dateContainer[i].classList.remove("selected");
+      dateText[i].textContent = "Календарь";
     });
-    
-  
-    const selectMonth = document.querySelectorAll('.month-option')
-    const selectYear = document.querySelectorAll('.year-option')
-  
-    selectMonth.forEach(item => {
-      item.addEventListener('click', () => {
-        document.querySelectorAll(".divCal").forEach((elem) => {
-          calendar.renderCalendar(currYear, monthStringToNumber(item.textContent), elem);
-        });
-        currMonth = monthStringToNumber(item.textContent)
-        item.parentElement.classList.remove('active')
-      })
-    })
-    selectYear.forEach(item => {
-      item.addEventListener('click', () => {
-        document.querySelectorAll(".divCal").forEach((elem) => {
-          calendar.renderCalendar(item.textContent, currMonth, elem);
-        });
-        currYear = item.textContent
-        item.parentElement.classList.remove('active')
-      })
-    })
-  
-    function monthStringToNumber(str) {
-      const month = [
-          "январь", "февраль", "март",
-          "апрель", "май", "июнь",
-          "июль", "август", "сентябрь",
-          "октябрь", "ноябрь", "декабрь"
-      ];
-      const monthNumber = month.indexOf(str.toLowerCase());
-      return monthNumber;
-  };
+  });
+
+  document.addEventListener("click", (event) => {
+    var dropdown = document.querySelectorAll(".select-month");
+    var dropdownContent = document.querySelectorAll(".month-options");
+
+    dropdown.forEach((item, i) => {
+      if (
+        event.target.closest(".select-month") === item &&
+        event.target.classList &&
+        !event.target.classList.contains("month-option")
+      ) {
+        dropdownContent[i].classList.add("active");
+      }
+    });
+  });
+
+  document.addEventListener("click", (event) => {
+    var dropdown = document.querySelectorAll(".select-year");
+    var dropdownContent = document.querySelectorAll(".year-options");
+
+    dropdown.forEach((item, i) => {
+      if (
+        event.target.closest(".select-year") === item &&
+        event.target.classList &&
+        !event.target.classList.contains("year-option")
+      ) {
+        dropdownContent[i].classList.add("active");
+      }
+    });
+  });
+
+  const selectMonth = document.querySelectorAll(".month-option");
+  const selectYear = document.querySelectorAll(".year-option");
+
+  selectMonth.forEach((item) => {
+    item.addEventListener("click", () => {
+      document.querySelectorAll(".divCal").forEach((elem) => {
+        calendar.renderCalendar(currYear, monthStringToNumber(item.textContent), elem);
+      });
+      currMonth = monthStringToNumber(item.textContent);
+      item.parentElement.classList.remove("active");
+    });
+  });
+  selectYear.forEach((item) => {
+    item.addEventListener("click", () => {
+      document.querySelectorAll(".divCal").forEach((elem) => {
+        calendar.renderCalendar(item.textContent, currMonth, elem);
+      });
+      currYear = item.textContent;
+      item.parentElement.classList.remove("active");
+    });
+  });
+
+  function monthStringToNumber(str) {
+    const month = [
+      "январь",
+      "февраль",
+      "март",
+      "апрель",
+      "май",
+      "июнь",
+      "июль",
+      "август",
+      "сентябрь",
+      "октябрь",
+      "ноябрь",
+      "декабрь",
+    ];
+    const monthNumber = month.indexOf(str.toLowerCase());
+    return monthNumber;
+  }
 }
 
+const inputs = document.querySelectorAll(".popup-schedule input");
+
+inputs.forEach((item) => {
+  item.addEventListener("focus", () => {
+    item.style.border = "none";
+  });
+  item.addEventListener("blur", () => {
+    if (item.value.length == 0 && !item.classList.contains("select-inp")) {
+      item.style.border = "1px solid red";
+    } else {
+      item.style.border = "none";
+    }
+  });
+});
+const textareas = document.querySelectorAll(".popup-schedule textarea");
+
+textareas.forEach((item) => {
+  item.addEventListener("focus", () => {
+    item.style.border = "none";
+  });
+  item.addEventListener("blur", () => {
+    if (item.value.length == 0) {
+      item.style.border = "1px solid red";
+    } else {
+      item.style.border = "none";
+    }
+  });
+});
 
 
+const config = {
+  attributes: true,
+  childList: true,
+  subtree: true,
+};
 
+
+const observer = new MutationObserver(() => {
+  compareSheduleTime(editScheduleSelectTimeLeft, editScheduleSelectTimeRight);
+  compareSheduleTime(newScheduleSelectTimeLeft, newScheduleSelectTimeRight);
+});
+
+observer.observe(editScheduleSelectTimeLeft, config);
+observer.observe(editScheduleSelectTimeRight, config);
+observer.observe(newScheduleSelectTimeLeft, config);
+observer.observe(newScheduleSelectTimeRight, config);

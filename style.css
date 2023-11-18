@@ -164,13 +164,9 @@ td {
   box-shadow: 1px 1px 3px #00000052;
 }
 
-z
-
-
 .cell-head .head-date{
   font-size: 13px;
   color: #333;
-  text-transform: uppercase;
 }
 
 table {
@@ -272,6 +268,10 @@ td {
 
 .cell-head {
   font-family: "Open-sans", sans-serif;
+  font-weight: 700;
+  color: #333;
+  font-size: 13px;
+  text-transform: uppercase;
 }
 
 th:first-child .cell-head span {
@@ -292,7 +292,7 @@ th:first-child .cell-head span {
 .event-title {
   font-size: 13px;
   font-weight: 700;
-  max-width: 100px;
+  max-width: 100%;
   color: #333;
 }
 
@@ -573,10 +573,11 @@ th:first-child .cell-head span {
 }
 
 .select-time .value {
-  padding: 11px 21px;
+  padding: 11px 18px;
   font-family: "Open-sans", sans-serif;
   cursor: pointer;
   user-select: none;
+  border-radius: 3px;
 }
 
 .select-time .value.selected {
@@ -650,6 +651,7 @@ th:first-child .cell-head span {
 }
 
 .schedule-time {
+  width: 80px;
   font-family: "Proxima Nova", sans-serif;
   text-decoration: underline;
   font-size: 14px;
@@ -713,17 +715,27 @@ th:first-child .cell-head span {
   display: flex;
   align-items: center;
   justify-content: center;
+  gap: 40px;
   height: 50px;
   width: 100%;
   background-color: #fff;
 }
 
+.calendar-day .top .day{
+  color: #333;
+  font-family: 'Open sans', sans-serif;
+  font-size: 20px;
+  text-transform: uppercase;
+}
+
 .calendar-day .top .prev {
   height: 30px;
   transform: rotate(180deg);
+  cursor: pointer;
 }
 .calendar-day .top .next {
   height: 30px;
+  cursor: pointer;
 }
 
 .calendar-day .body {
@@ -739,6 +751,9 @@ th:first-child .cell-head span {
 }
 .calendar-day .row-time {
   margin-right: 12.5px;
+  font-family: "Opem sans", sans-serif;
+  color: #333;
+  font-size: 18px;
 }
 .calendar-day .row-line {
   width: 100%;
@@ -1007,4 +1022,58 @@ th:first-child .cell-head span {
   height: 100%;
   background-color: #cdcdcd85;
   overflow-y: scroll;
+}
+
+.new {
+  padding: 50px;
+}
+
+.form-group {
+  display: flex;
+  margin-bottom: 15px;
+}
+
+.form-group input {
+  padding: 0;
+  height: initial;
+  width: initial;
+  margin-bottom: 0;
+  display: none;
+  cursor: pointer;
+}
+
+.form-group label {
+  position: relative;
+  cursor: pointer;
+}
+
+.form-group label:before {
+  content:'';
+  appearance: none;
+  background-color: #EAEAEA;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05), inset 0px -15px 10px -12px rgba(0, 0, 0, 0.05);
+  padding: 5.5px;
+  display: inline-block;
+  border-radius: 1px;
+  position: relative;
+  vertical-align: middle;
+  cursor: pointer;
+  margin-right: 5px;
+}
+
+.form-group input:checked + label:before{
+  background-color: #5898ff;
+}
+
+.form-group input:checked + label:after {
+  content: '';
+  display: block;
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  width: 2px;
+  height: 5.5px;
+  border: solid #fff;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
 }
